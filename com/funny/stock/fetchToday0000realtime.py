@@ -107,7 +107,7 @@ rowList.append(rowToday)
             
 # line notify
 msg = None
-if float(k9) <= 22.1:
+if float(k9) <= 20:
     msg = "盤中 K 值 %s  ## 建議買進 ##" %(k9)
 elif float(k9) >= 80:
     msg = "盤中 K 值 %s  ## 建議賣出 ##" %(k9)
@@ -116,11 +116,10 @@ else:
 
 if msg != None:
     print(msg)
-    #lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
-    #lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
     time.sleep(3)   # delays for n seconds
-    #lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
-    #lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
+
 
 print("TEST")
 print(os.environ["LINE_TEST_TOKEN"])
