@@ -107,7 +107,7 @@ rowList.append(rowToday)
             
 # line notify
 msg = None
-if float(k9) <= 20:
+if float(k9) <= 22.1:
     msg = "盤中 K 值 %s  ## 建議買進 ##" %(k9)
 elif float(k9) >= 80:
     msg = "盤中 K 值 %s  ## 建議賣出 ##" %(k9)
