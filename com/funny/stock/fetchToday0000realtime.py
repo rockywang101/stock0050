@@ -117,12 +117,18 @@ else:
 if msg != None:
     print(msg)
     #lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
-    lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+    #lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
     time.sleep(15)   # delays for n seconds
     #lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
-    lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
-    
-    
-    
+    #lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+
+print("TEST")
+print(os.environ["LINE_TEST_TOKEN"])
+
+print("0050")
+print(os.environ["LINE_0050_TOKEN"])
+
+print("00502")
+print(os.environ["LINE_0050_TOKEN2"])    
     
     
