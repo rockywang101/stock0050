@@ -129,5 +129,6 @@ print(os.environ["LINE_0050_TOKEN"])
 
 print("00502")
 print(os.environ["LINE_0050_TOKEN2"])    
+
     
     
