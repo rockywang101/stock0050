@@ -1,6 +1,10 @@
 '''
 抓取今天的大盤資料並計算 RSA/K9 值，發 Line 到群組
 
+因為一開始是用歷史資料，且這個資料是在公平交易所，應該比在 google 或 yahoo 更精準
+後來發現有 http://mis.twse.com.tw/stock/fibest.jsp?stock=t00 可以查即時資料，應該 13:30 過後就變盤後資料
+後續會再修正
+
 Created on 2017年12月1日
 @author: rocky.wang
 '''
