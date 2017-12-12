@@ -32,7 +32,6 @@ def fetchTodayPrice():
     rowToday = None
     # 取得今日的價格資料
     for item in jData:
-        print(item)
         if item[0] == today:
             rowToday = item
     # 清除千分位並回傳
@@ -64,6 +63,10 @@ with open(filename, "r") as csvfile:
     for row in reader:
         for i in range(len(row)):
             row[i] = row[i].replace(",", "") # 把所有千分位去掉，以免影響 float 轉型
+
+        # 因 yahoo 數值不對，刻意修正成與 yahoo 一致
+        if row[0] == "106/11/29":
+            row[2] = "10759.44"
 
         rowList.append(row)
         maxList.pop(0)
@@ -116,7 +119,6 @@ print(msg)
 
 # 發 LINE 通知
 lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
-
 time.sleep(2)   # delays for n seconds
 lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
 
