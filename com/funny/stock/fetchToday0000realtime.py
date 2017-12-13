@@ -85,11 +85,6 @@ maxList.append(rowToday[2]) # 最高價
 minList.pop(0)
 minList.append(rowToday[1]) # 最低價
 
-print("最高9天值")
-print(maxList)
-print("最低9天值")
-print(minList)
-
 # 算出今日的 RSV 值
 rsv = round((100 * (float(rowToday[0]) - min(minList)) / (max(maxList) - min(minList))), 2)
 # 更新，發現 yahoo 的算法應該是先四捨五入後再相加
@@ -119,16 +114,3 @@ if msg != None:
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
     time.sleep(3)   # delays for n seconds
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
-
-
-print("TEST")
-print(os.environ["LINE_TEST_TOKEN"])
-
-print("0050")
-print(os.environ["LINE_0050_TOKEN"])
-
-print("00502")
-print(os.environ["LINE_0050_TOKEN2"])    
-
-    
-    
