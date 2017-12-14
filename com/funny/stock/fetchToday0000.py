@@ -95,7 +95,7 @@ v2 = round(float(k9) * 2 / 3, 2)
 k9 = round(v1 + v2, 2) # 兩個都已經四捨五入，但相加還是可能會有無限小數，python 太奧妙了
 k9 = format(k9, ".2f") # 在 linux 上跑 round 會無效
 
-rowToday.append(rsv)
+rowToday.append(format(rsv, ".2f"))
 rowToday.append(k9)
 
 #rowList.pop(0) # 移除最舊的資料 (目前 MARK 代表不移除)
