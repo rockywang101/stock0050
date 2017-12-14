@@ -108,7 +108,8 @@ with open(filename, "w", newline="\n") as csvfile:
         writer.writerow(item)
             
 # 準備發通知的文字
-msg = "今日 K 值 %s" %(k9)
+dd = datetime.date.today().strftime('%Y/%m/%d')
+msg = dd + " K 值 %s" %(k9)
 if float(k9) <= 20:
     msg += "  ## 建議買進 ##"
 elif float(k9) >= 80:
