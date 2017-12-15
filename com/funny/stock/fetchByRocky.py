@@ -37,7 +37,7 @@ def composeLineText(rtnList, minPrice, maxPrice):
     #text = "%s 價格 [%s], [%s], %s，目標 [%s]-[%s]" %(rtnList[0], rtnList[1], rtnList[2], rtnList[3], minPrice, maxPrice)
     text = "%s 價格 %s, %s, %s" %(rtnList[0], rtnList[1], rtnList[2], rtnList[3])
     text += "\n"
-    text += "目標 %s ~ %s " %(minPrice, maxPrice)
+    text += "目標 %s ~ %s " %(format(minPrice, ".2f"), format(maxPrice, ".2f"))
     
     if float(rtnList[1]) >= maxPrice:
         text += "### YES, 賣掉它 !"
