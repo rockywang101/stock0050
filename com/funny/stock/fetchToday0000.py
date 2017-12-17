@@ -9,6 +9,7 @@ Created on 2017年12月1日
 @author: rocky.wang
 '''
 import datetime, requests, csv, os, time, lineTool
+from com.funny.stock import stockUtil
 
 now = datetime.datetime.now()
 print("--------------------------------------------------")        
@@ -95,7 +96,7 @@ v2 = round(float(k9) * 2 / 3, 2)
 k9 = round(v1 + v2, 2) # 兩個都已經四捨五入，但相加還是可能會有無限小數，python 太奧妙了
 k9 = format(k9, ".2f") # 在 linux 上跑 round 會無效
 
-rowToday.append(rsv)
+rowToday.append(format(rsv, ".2f"))
 rowToday.append(k9)
 
 #rowList.pop(0) # 移除最舊的資料 (目前 MARK 代表不移除)
@@ -108,11 +109,22 @@ with open(filename, "w", newline="\n") as csvfile:
         writer.writerow(item)
             
 # 準備發通知的文字
-msg = "今日 K 值 %s" %(k9)
+dd = datetime.date.today().strftime('%Y/%m/%d')
+msg = dd + " K 值 %s" %(k9)
 if float(k9) <= 20:
     msg += "  ## 建議買進 ##"
 elif float(k9) >= 80:
     msg += "  ## 建議賣出 ##"    
+
+
+# 加上 0050 0056 股價
+j = stockUtil.fetchStock("0050")
+z = j.get("msgArray")[0].get("z")
+msg += "\n\n0050價格 %s" %(z)
+
+j = stockUtil.fetchStock("0056")
+z = j.get("msgArray")[0].get("z")
+msg += "\n0056價格 %s" %(z)
 
 print(msg)
 

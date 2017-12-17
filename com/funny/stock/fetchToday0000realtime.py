@@ -12,7 +12,6 @@ import datetime, requests, csv, os, time, bs4, lineTool
 def fetchTodayPriceRealtime():
     
     url = "http://finance.google.com.hk/finance?q=TPE:TAIEX"
-    print("GET " + url)
     
     r = requests.get(url)
     soup = bs4.BeautifulSoup(r.text, "html.parser")
@@ -44,7 +43,6 @@ sToday = str(int(today.strftime("%Y")) - 1911) + today.strftime("/%m/%d")
 now = datetime.datetime.now()
 print()
 print("執行時間 %s" %(now.strftime("%Y-%m-%d %H:%M:%S")))
-print("--------------------------------------------------")        
 
 
 # 取得目前 py 檔的資料夾路徑   os.getwcd() 會取得執行 bat 的目錄
