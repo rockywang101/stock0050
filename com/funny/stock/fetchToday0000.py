@@ -9,6 +9,7 @@ Created on 2017年12月1日
 @author: rocky.wang
 '''
 import datetime, requests, csv, os, time, lineTool
+from com.funny.stock import stockUtil
 
 now = datetime.datetime.now()
 print("--------------------------------------------------")        
@@ -114,6 +115,16 @@ if float(k9) <= 20:
     msg += "  ## 建議買進 ##"
 elif float(k9) >= 80:
     msg += "  ## 建議賣出 ##"    
+
+
+# 加上 0050 0056 股價
+j = stockUtil.fetchStock("0050")
+z = j.get("msgArray")[0].get("z")
+msg += "\n\n0050價格 %s" %(z)
+
+j = stockUtil.fetchStock("0056")
+z = j.get("msgArray")[0].get("z")
+msg += "\n0056價格 %s" %(z)
 
 print(msg)
 
