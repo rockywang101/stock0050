@@ -66,8 +66,8 @@ with open(filename, "r") as csvfile:
             row[i] = row[i].replace(",", "") # 把所有千分位去掉，以免影響 float 轉型
 
         # 因 yahoo 數值不對，刻意修正成與 yahoo 一致
-        if row[0] == "106/11/29":
-            row[2] = "10759.44"
+#         if row[0] == "106/11/29":
+#             row[2] = "10759.44"
 
         rowList.append(row)
         maxList.pop(0)
@@ -99,7 +99,7 @@ k9 = format(k9, ".2f") # 在 linux 上跑 round 會無效
 rowToday.append(format(rsv, ".2f"))
 rowToday.append(k9)
 
-#rowList.pop(0) # 移除最舊的資料 (目前 MARK 代表不移除)
+rowList.pop(0) # 移除最舊的資料 (目前 MARK 代表不移除)
 rowList.append(rowToday)
 
 # 把含最新的資料再寫回檔案，供下次使用
