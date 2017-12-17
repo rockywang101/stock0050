@@ -5,8 +5,11 @@ Created on 2017年12月17日
 import requests, bs4, lineTool, os
 import datetime
 
+ph = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(ph, "myip.txt")
+
 ip = None
-with open("myip.txt", "r") as f1:
+with open(filename, "r") as f1:
     ip = f1.read()
 
 url = "http://www.seocheckpoints.com/my-ip-address"
@@ -18,7 +21,7 @@ elem = soup.find("span", {"class": "badge bg-green"})
 
 todayIP = elem.text
 
-with open("myip.txt", "w") as f1:
+with open(filename, "w") as f1:
     f1.write(todayIP)
 
 now = datetime.datetime.now()
