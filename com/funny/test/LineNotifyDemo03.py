@@ -12,8 +12,7 @@ import requests, os
 def lineNotify(token, msg, picURI):
     url = "https://notify-api.line.me/api/notify"
     headers = {
-        "Authorization": "Bearer " + token,
-        "Content-Type" : "application/x-www-form-urlencoded"
+        "Authorization": "Bearer " + token
     }
    
     payload = {'message': msg}
