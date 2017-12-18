@@ -27,5 +27,7 @@ msg = "Hello Python"
 picURI = "/data/data/com.termux/files/home/girlfriend.jpg"
 
 
-lineNotify(token, msg, picURI)
+statusCode = lineNotify(token, msg, picURI)
+
+print(statusCode)
 
