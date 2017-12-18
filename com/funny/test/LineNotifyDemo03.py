@@ -1,5 +1,5 @@
 '''
-Demo Line Notify 發圖片
+Demo Line Notify 發圖片 (on Linux)
 
 Created on 2017年12月19日
 @author: rocky.wang
@@ -26,7 +26,4 @@ msg = "Hello Python"
 picURI = "/data/data/com.termux/files/home/girlfriend.jpg"
 
 
-statusCode = lineNotify(token, msg, picURI)
-
-print(statusCode)
-
+lineNotify(token, msg, picURI)

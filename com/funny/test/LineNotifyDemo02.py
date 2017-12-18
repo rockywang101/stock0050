@@ -1,5 +1,5 @@
 '''
-Demo Line Notify 發圖片
+Demo Line Notify 發圖片 (on Windows)
 
 Created on 2017年12月19日
 @author: rocky.wang
@@ -16,7 +16,7 @@ def lineNotify(token, msg, picURI):
     }
    
     payload = {'message': msg}
-    files = {'imageFile': open('girlfriend.jpg', 'rb')}
+    files = {'imageFile': open(picURI, 'rb')}
     
     r = requests.post(url, headers = headers, params = payload, files=files)
     return r.status_code
@@ -24,8 +24,8 @@ def lineNotify(token, msg, picURI):
 
 token = os.environ["LINE_TEST_TOKEN"]
 msg = "Hello Python"
-picURI = "C:\\Users\\Rocky\\git\\stock0050\\com\\funny\\test\\girlfriend.jpg"
+#picURI = "C:\\Users\\Rocky\\git\\stock0050\\com\\funny\\test\\girlfriend.jpg" # 用下面的相對路徑也行 
+picURI = "girlfriend.jpg"
 
 
 lineNotify(token, msg, picURI)
-
