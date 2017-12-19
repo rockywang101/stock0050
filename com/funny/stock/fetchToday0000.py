@@ -8,8 +8,21 @@
 Created on 2017年12月1日
 @author: rocky.wang
 '''
-import datetime, requests, csv, os, time, lineTool
-from com.funny.stock import stockUtil
+import datetime, requests, csv, os, time, lineTool, json
+
+
+def fetchStock(stockId):
+
+    req = requests.Session()
+    req.get("http://mis.twse.com.tw/stock/index.jsp")
+    url = "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stockId}.tw&_={time}".format(stockId=stockId, time=int(time.time()) * 1000)
+    r = req.get(url)
+
+    try:
+        return r.json()
+    except json.decoder.JSONDecodeError:
+        return {'rtmessage': 'json decode error', 'rtcode': '5000'}
+    
 
 now = datetime.datetime.now()
 print("--------------------------------------------------")        
@@ -118,11 +131,11 @@ elif float(k9) >= 80:
 
 
 # 加上 0050 0056 股價
-j = stockUtil.fetchStock("0050")
+j = fetchStock("0050")
 z = j.get("msgArray")[0].get("z")
 msg += "\n\n0050價格 %s" %(z)
 
-j = stockUtil.fetchStock("0056")
+j = fetchStock("0056")
 z = j.get("msgArray")[0].get("z")
 msg += "\n0056價格 %s" %(z)
 
