@@ -33,7 +33,6 @@ print("--------------------------------------------------")
 dt = datetime.date.today()
 today = str(int(now.strftime("%Y")) - 1911) + now.strftime("/%m/%d")
 
-
 """
 取得今日的價格資料 
 """
@@ -132,12 +131,47 @@ elif float(k9) >= 80:
 
 # 加上 0050 0056 股價
 j = fetchStock("0050")
-z = j.get("msgArray")[0].get("z")
-msg += "\n\n0050價格 %s" %(z)
+zStr = j.get("msgArray")[0].get("z")
+msg += "\n\n0050價格 %s" %(zStr)
+
+z = float(j.get('msgArray')[0].get('z'))
+y = float(j.get('msgArray')[0].get('y'))    
+diff = z - y
+diffStr = "%.2f" %(diff)
+if diff > 0:
+    diffStr = "▲" + diffStr
+    precentDiff = diff / y * 100
+    preDiffStr = "%.2f" %(precentDiff) + "%"
+    diffStr = diffStr + " (" + preDiffStr + ")"
+    msg += " " + diffStr
+elif diff < 0:
+    diffStr = "▼" + diffStr
+    precentDiff = diff / y * 100
+    preDiffStr = "%.2f" %(precentDiff) + "%"
+    diffStr = diffStr + " (" + preDiffStr + ")"
+    msg += " " + diffStr    
+
 
 j = fetchStock("0056")
-z = j.get("msgArray")[0].get("z")
-msg += "\n0056價格 %s" %(z)
+zStr = j.get("msgArray")[0].get("z")
+msg += "\n0056價格 %s" %(zStr)
+
+z = float(j.get('msgArray')[0].get('z'))
+y = float(j.get('msgArray')[0].get('y'))    
+diff = z - y
+diffStr = "%.2f" %(diff)
+if diff > 0:
+    diffStr = "▲" + diffStr
+    precentDiff = diff / y * 100
+    preDiffStr = "%.2f" %(precentDiff) + "%"
+    diffStr = diffStr + " (" + preDiffStr + ")"
+    msg += " " + diffStr
+elif diff < 0:
+    diffStr = "▼" + diffStr
+    precentDiff = diff / y * 100
+    preDiffStr = "%.2f" %(precentDiff) + "%"
+    diffStr = diffStr + " (" + preDiffStr + ")"
+    msg += " " + diffStr    
 
 print(msg)
 
