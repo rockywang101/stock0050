@@ -28,7 +28,6 @@ y = float(j.get('msgArray')[0].get('y'))
 
 diff = z - y
 diffStr = "%.2f" %(diff)
-
 if diff > 0:
     diffStr = "▲" + diffStr
 elif diff < 0:

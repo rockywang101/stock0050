@@ -4,7 +4,21 @@
 Created on 2017年12月1日
 @author: rocky.wang
 '''
-import datetime, requests, csv, os, time, bs4, lineTool
+import datetime, requests, csv, os, time, bs4, lineTool, json
+
+
+def fetchStock(stockId):
+
+    req = requests.Session()
+    req.get("http://mis.twse.com.tw/stock/index.jsp")
+    url = "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stockId}.tw&_={time}".format(stockId=stockId, time=int(time.time()) * 1000)
+    r = req.get(url)
+
+    try:
+        return r.json()
+    except json.decoder.JSONDecodeError:
+        return {'rtmessage': 'json decode error', 'rtcode': '5000'}
+
 
 """
 取得今日盤中即時價格
@@ -106,6 +120,52 @@ elif float(k9) >= 80:
     msg = "盤中 K 值 %s  ## 建議賣出 ##" %(k9)
 else:
     print("盤中 K 值 %s (不發通知)" %(k9))
+
+# 加入 0050，0056 資訊
+if float(k9) <= 20 or float(k9) >= 80:
+    j = fetchStock("0050")
+    zStr = j.get("msgArray")[0].get("z")
+    msg += "\n\n0050價格 %s" %(zStr)
+
+    z = float(j.get('msgArray')[0].get('z'))
+    y = float(j.get('msgArray')[0].get('y'))    
+    diff = z - y
+    diffStr = "%.2f" %(diff)
+    if diff > 0:
+        diffStr = "▲" + diffStr
+        precentDiff = diff / y * 100
+        preDiffStr = "%.2f" %(precentDiff) + "%"
+        diffStr = diffStr + " (" + preDiffStr + ")"
+        msg += " " + diffStr
+    elif diff < 0:
+        diffStr = "▼" + diffStr
+        precentDiff = diff / y * 100
+        preDiffStr = "%.2f" %(precentDiff) + "%"
+        diffStr = diffStr + " (" + preDiffStr + ")"
+        msg += " " + diffStr    
+
+    j = fetchStock("0056")
+    zStr = j.get("msgArray")[0].get("z")
+    msg += "\n0056價格 %s" %(zStr)
+    
+    z = float(j.get('msgArray')[0].get('z'))
+    y = float(j.get('msgArray')[0].get('y'))    
+    diff = z - y
+    diffStr = "%.2f" %(diff)
+    if diff > 0:
+        diffStr = "▲" + diffStr
+        precentDiff = diff / y * 100
+        preDiffStr = "%.2f" %(precentDiff) + "%"
+        diffStr = diffStr + " (" + preDiffStr + ")"
+        msg += " " + diffStr
+    elif diff < 0:
+        diffStr = "▼" + diffStr
+        precentDiff = diff / y * 100
+        preDiffStr = "%.2f" %(precentDiff) + "%"
+        diffStr = diffStr + " (" + preDiffStr + ")"
+        msg += " " + diffStr    
+
+
 
 if msg != None:
     print(msg)
