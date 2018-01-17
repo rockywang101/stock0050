@@ -37,7 +37,7 @@ class TWSEFetcher():
     
     def fetch(self, ym: str, sid: str, retry = 3):
 
-        print('fetcing stock [%s], ym: [%s]' %(sid, ym))        
+        print('TWSE Fetching Stock [%s], ym: [%s]' %(sid, ym))        
         params = {'date': ym+'01', 'stockNo': sid}
         r = requests.get(TWSE_BASE_STOCK_URL, params=params)
         try:

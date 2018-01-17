@@ -7,14 +7,13 @@ Created on 2017年12月22日
 from com.funny.stock.TWSEFetcher import TWSEFetcher
 import collections
 
-stockId = "2897"
-
 import datetime
 import csv
 import time
 
 from dateutil.relativedelta import relativedelta
 
+sid = "0056"
 
 beginDate = datetime.date(1999, 1, 1)
 today = datetime.date.today()
@@ -25,9 +24,6 @@ while (beginDate <= today):
     list1.append(beginDate.strftime('%Y%m'))
     beginDate += relativedelta(months = 1)   # 月份 +1
 
-print(list1)
-
-sid = "0050"
 fetcher = TWSEFetcher() 
 
 info = {}
@@ -44,6 +40,9 @@ while conti:
         ym = list1[0]
         data = fetcher.fetch(ym, sid)
         info[ym] = data
+        conti = False
+        break
+    elif len(list1) == 0:
         conti = False
         break
     
