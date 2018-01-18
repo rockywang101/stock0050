@@ -9,30 +9,61 @@ from textwrap import indent
 
 now = datetime.datetime.now()
 
+prettyPrint = False
+k9High = 80
+k9Low = 20
+finalTime = "13:30:00"
+
 isToday = False # 是否為當日資料
 isFinal = False # 是否為盤後資料
+isNotify = True # 是否要發通知
+
 
 def fetchStock(stockId):
 
     s = requests.Session()
     s.get("http://mis.twse.com.tw/stock/index.jsp")
     url = "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stockId}.tw&_={time}".format(stockId=stockId, time=int(time.time()) * 1000)
-    print("---\nGET %s\n---" %(url))
+    print("\nGET %s" %(url))
     r = s.get(url)
 
     try:
+        if prettyPrint:
+            print(json.dumps(r.json(), indent=4))
+        else:
+            print(r.json())
+            
         return r.json()
     except json.decoder.JSONDecodeError:
+        isNotify = False
         return {'rtmessage': 'json decode error', 'rtcode': '5000'}
+    
+def fetchStockAndComposeMessage(stockId):
+    j = fetchStock(stockId)
+    z = j.get("msgArray")[0].get("z") # 現價
+    y = j.get("msgArray")[0].get("y") # 昨日收盤價
+    
+    rtmsg = "%s價格 %s" %(stockId, z)
+    diff = float(z) - float(y)
+#     diff = 0
+    precentDiff = diff / float(y) * 100
+    preDiffStr = "%.2f" %(precentDiff) + "%"
+    if diff > 0:
+        dstr = " ▲" + "%.2f" %(diff) + " (" + preDiffStr + ")"
+        rtmsg = rtmsg + dstr
+    elif diff < 0:
+        dstr = " ▼" + "%.2f" %(diff) + " (" + preDiffStr + ")"
+        rtmsg = rtmsg + dstr
+    
+    return rtmsg
     
 # 抓取大盤資料    
 j = fetchStock("t00")
-print(json.dumps(j, indent=4))
 
 ''' 防止還有新的資料，等兩秒再抓一次 '''
 if j.get("msgArray")[0].get("t") == '13:30:00':
-    print("13:30:00，睡兩秒再重新抓一次資料")
-    time.sleep(2)
+    print("13:30:00，睡三分鐘再重新抓一次資料，以免沒抓到最終的資料") # 大盤好像都會是超過 13:30:00，今天看是 13:31:00 昨天看是 13:33:00
+    time.sleep(180)
     j = fetchStock("t00")
     print(json.dumps(j, indent=4))
 
@@ -44,15 +75,16 @@ if not isToday:
     exit()
 
 # 判斷是否為盤後資料
-if j.get("msgArray")[0].get("t") >= "13:30:00":
+if j.get("msgArray")[0].get("t") >= finalTime:
     isFinal = True
-    
-    
 
+d = j.get("msgArray")[0].get("d") # 日期
+t = j.get("msgArray")[0].get("t") # 時間
+o = j.get("msgArray")[0].get("o") # 開盤價
 h = j.get("msgArray")[0].get("h") # 最高價
 l = j.get("msgArray")[0].get("l") # 最低價
 z = j.get("msgArray")[0].get("z") # 收盤價
-    
+
 
 maxList = [0, 0, 0, 0, 0, 0, 0, 0, 0] # 9 天的最高價清單
 minList = [0, 0, 0, 0, 0, 0, 0, 0, 0] # 9 天的最低價清單
@@ -96,31 +128,49 @@ k9 = round(v1 + v2, 2) # 兩個都已經四捨五入，但相加還是可能會�
 k9 = format(k9, ".2f") # 在 linux 上跑 round 會無效
 
 # 日期，開，高，低，收
-rowToday = [now.strftime("%Y%m%d"), h, l, z, format(rsv, ".2f"), k9]
+rowToday = [now.strftime("%Y%m%d"), o, h, l, z, format(rsv, ".2f"), k9]
 
 rowList.pop(0) # 移除最舊的資料 (目前 MARK 代表不移除)
 rowList.append(rowToday)
 
-
-# time.sleep(1)
-# j = fetchStock("2890")
-# print(j)
-# print(json.dumps(j, indent=4))
-# print(j.get("msgArray")[0].get("d"))
-# print(j.get("msgArray")[0].get("t"))
-
-
-# print(now.strftime("%Y-%m-%d %H:%M:%S"))
-# print(now.strftime("%Y%m%d"))
-# print(now.strftime("%H:%M:%S"))
-
-#"t": "12:28:09",
-#"d": "20180117",
+# 把含最新的資料再寫回檔案，供下次使用
+if isFinal:
+    with open(filename, "w", newline="\n") as csvfile:
+        writer = csv.writer(csvfile)
+        for item in rowList:
+            writer.writerow(item)
 
 
-t1 = "12:31:00"
-t2 = "12:31:00"
+# 判斷盤中，並且 k9 值不達標，則不發通知
+if not isFinal:
+    if float(k9) > k9Low and float(k9) < k9High:
+        isNotify = False
 
-print(t1 <= t2)
+# 準備發通知的文字
+msg = ""
+if isFinal:
+    msg = datetime.date.today().strftime('%Y/%m/%d') + " K 值 %s" %(k9)
+else:
+    msg = "盤中 K 值 %s" %(k9)
+
+if float(k9) <= k9Low:
+    msg += "  ## 建議買進 ##"
+elif float(k9) >= k9High:
+    msg += "  ## 建議賣出 ##"
+
+# 有需要發通知才繼續查 0050 / 0056 價格
+if isNotify:
+    
+    time.sleep(1)
+    msg += "\n\n" + fetchStockAndComposeMessage("0050")
+    
+    time.sleep(1)
+    msg += "\n" + fetchStockAndComposeMessage("0056")
+    
+    print("\n%s" %(msg))
+else:
+    print("\n%s" %(msg))
+    print("不發通知")
+    
 
 
