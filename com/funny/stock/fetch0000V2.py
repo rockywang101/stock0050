@@ -93,7 +93,7 @@ rowList = []
 
 # 取得目前 py 檔的資料夾路徑   (os.getwcd() 會取得執行 bat 的目錄，不能用它)
 ph = os.path.dirname(os.path.abspath(__file__))
-filename = os.path.join(ph, "0000.csv")
+filename = os.path.join(ph, "0000EX.csv")
 
 # 打開 0050.csv 讀取最近九天的資料
 with open(filename, "r") as csvfile:
