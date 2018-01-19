@@ -19,3 +19,13 @@ def getRate(n, m, price):
 getRate(1, 0, 20.1)
 getRate(0.49, 0.74, 18.6)
 getRate(0.52, 0.43, 13.5)
+
+
+str = 't00.tw_tse_20180111_B_0000000t00'
+
+tokens = str.split(sep='_')
+
+for token in tokens:
+    print(token)
+
+print(str.split(sep='_')[2])
