@@ -29,3 +29,11 @@ for token in tokens:
     print(token)
 
 print(str.split(sep='_')[2])
+
+
+
+
+t1 = "12:31:00"
+t2 = "12:31:00"
+
+print(t1 <= t2)
