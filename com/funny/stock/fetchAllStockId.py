@@ -1,4 +1,9 @@
 '''
+使用 pandas
+
+至 http://isin.twse.com.tw/isin/C_public.jsp?strMode=2
+
+抓取所有股票代號與上市日期
 
 Created on 2018年1月22日
 @author: rocky.wang
