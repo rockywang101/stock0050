@@ -1,0 +1,27 @@
+'''
+
+Created on 2018年1月22日
+@author: rocky.wang
+'''
+
+import pandas, re
+
+url = "http://isin.twse.com.tw/isin/C_public.jsp?strMode=2"
+
+table = pandas.read_html(url)[0]
+
+idx = 0
+dataCnt = 0
+for item in table[0]:
+    
+    tokens = item.split("　")
+    
+    r = re.search(r"^[0-9]{4}$", tokens[0])
+    
+    if r != None:
+        print("stockId: %s, date: %s" %(tokens[0], table[2][idx]))
+        dataCnt += 1
+
+    idx += 1
+    
+print("total cnt => %s" %(dataCnt))
