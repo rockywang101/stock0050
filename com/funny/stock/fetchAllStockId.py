@@ -10,6 +10,7 @@ Created on 2018年1月22日
 '''
 
 import pandas, re
+import csv
 
 url = "http://isin.twse.com.tw/isin/C_public.jsp?strMode=2"
 
@@ -30,3 +31,14 @@ for item in table[0]:
     idx += 1
     
 print("total cnt => %s" %(dataCnt))
+
+
+with open("all.csv", "a", newline="\n") as csvfile:
+    writer = csv.writer(csvfile)
+    idx = 0
+    for item in table[0]:
+        tokens = item.split("　")
+        sid = tokens[0]
+        row = [sid, table[2][idx]]
+        writer.writerow(row)
+        idx += 1
