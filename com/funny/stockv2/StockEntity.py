@@ -35,6 +35,26 @@ class StockPrice(Base):
             self.txCount
         )
         
+        
+        
+class StockInsertRecord(Base):
+    
+    __tablename__ = 'stock_insert_record'
+    
+    id = Column(Integer, primary_key=True)
+    stockId = Column(String) # 股票代號
+    dt = Column(String) # 交易日期
+    result = Column(Integer) # 成交筆數
+    
+    def __repr__(self):
+        return "StockInsertRecord ('{}', '{}', {}, {})".format(
+            self.id,
+            self.stockId,
+            self.dt,
+            self.result
+        )
+        
+        
 if __name__ == '__main__':
     
     ''' 此時只有建立 SQLAlchemy Engine 實例，還沒在記憶體內建立資料，
