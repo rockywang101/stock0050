@@ -1,5 +1,5 @@
 '''
-即時與盤後統一抓取 TWSE，由時間判斷
+即時與盤後統一為這一隻程式，抓取 TWSE，由時間判斷即時或盤後
 
 Created on 2018年1月14日
 @author: rocky.wang
@@ -18,6 +18,8 @@ isToday = False # 是否為當日資料
 isFinal = False # 是否為盤後資料
 isNotify = True # 是否要發通知
 
+print()
+print("v2 執行時間 %s" %(now.strftime("%Y-%m-%d %H:%M:%S")))
 
 def fetchStock(stockId):
 
