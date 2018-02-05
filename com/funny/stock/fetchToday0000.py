@@ -16,6 +16,9 @@ def fetchStock(stockId):
     req = requests.Session()
     req.get("http://mis.twse.com.tw/stock/index.jsp")
     url = "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stockId}.tw&_={time}".format(stockId=stockId, time=int(time.time()) * 1000)
+    # 取 time 有點錯了，但不影響功能，先不改
+    #url = "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_{stockId}.tw&_={time}".format(stockId=stockId, time=int(time.time() * 1000))
+    
     r = req.get(url)
 
     try:
