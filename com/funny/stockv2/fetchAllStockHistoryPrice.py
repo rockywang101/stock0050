@@ -126,6 +126,9 @@ def insertDB(stockList, stockId, dt, test=False):
     if test:
         raise Exception
     
+    if len(stockList) <= 0:
+        raise Exception("cannot be zero records")
+    
     rows = session.query(StockInsertRecord).filter_by(stockId=stockId).filter_by(dt=dt)
 
     if rows.count() != 1:
