@@ -5,7 +5,7 @@
 Created on 2018年1月23日
 @author: rocky.wang
 '''
-import requests, os
+import requests, os, csv
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Float
@@ -17,7 +17,6 @@ from com.funny.stockv2.TWSEFetcher import TWSEFetcherEx
 
 Base = declarative_base()
 engine = create_engine('sqlite:///stock.sqlite', echo=False)
-Base.metadata.create_all(engine)
          
 
 class StockPrice(Base):
@@ -61,8 +60,9 @@ class StockInsertRecord(Base):
             self.dt,
             self.result
         )
-        
-import csv
+
+Base.metadata.create_all(engine)
+
 
 # 取得目前 py 檔的資料夾路徑   (os.getwcd() 會取得執行 bat 的目錄，不能用它)
 ph = os.path.dirname(os.path.abspath(__file__))
