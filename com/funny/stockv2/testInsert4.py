@@ -45,6 +45,24 @@ class StockPrice(Base):
             self.txCount
         )
         
+
+class StockInsertRecord(Base):
+    
+    __tablename__ = 'stock_insert_record'
+    
+    id = Column(Integer, primary_key=True)
+    stockId = Column(String) # 股票代號
+    dt = Column(String) # 交易日期
+    result = Column(Integer) # 成交筆數
+    
+    def __repr__(self):
+        return "StockInsertRecord ('{}', '{}', {}, {})".format(
+            self.id,
+            self.stockId,
+            self.dt,
+            self.result
+        )
+        
 import csv
 
 dateDict = {}
@@ -77,6 +95,9 @@ if datas != None:
     for data in datas:
         allStockIds.append(data[0])
 
+print("sleep 2 seconds to be continue...")
+time.sleep(2)
+
 # 測試所有的 stockId 都能拿到日期
 cnt = 1
 for id in allStockIds:
@@ -86,7 +107,7 @@ for id in allStockIds:
 
 
 ''' write to db '''
-def insertDB(stockList):
+def insertDB(stockList, stockId, dt, test=False):
     engine = create_engine('sqlite:///stock.sqlite', echo=False)
       
     Base.metadata.create_all(engine)
@@ -96,6 +117,22 @@ def insertDB(stockList):
       
     for stockPrice in stockList:
         session.add(stockPrice)
+        
+    if test:
+        raise Exception
+    
+    if dt == '201707':
+        raise Exception
+    
+    rows = session.query(StockInsertRecord).filter_by(stockId=stockId).filter_by(dt=dt)
+
+    for row in rows:
+        print(row)
+
+#     if len(rows) != 1:
+#         raise Exception
+    
+    rows[0].result = 1
       
     session.commit()
 
@@ -112,7 +149,7 @@ def fetchMonthPrice(stockId, dt):
 #         print(stockPrice)
         stockList.append(stockPrice)
         
-    insertDB(stockList)
+    insertDB(stockList, stockId, dt)
 
 from dateutil.relativedelta import relativedelta
 
@@ -133,26 +170,11 @@ def fetchAllPrice(sid, startDate):
         
         fetchMonthPrice(sid, dt)
         
-        time.sleep(5)
+        time.sleep(15)
         beginDate += relativedelta(months = 1)   # 月份 +1
     
-# tatalCnt = len(allStockIds)
-# cnt = 1
-# for sid in allStockIds:
-#     print("run %s of %s stocks" %(cnt, tatalCnt))
-#     cnt += 1
-#     startDate = dateDict[sid]
-#     
-#     beginTime = int(time.time()*1000)
-#     fetchAllPrice(sid, startDate)
-#     endTime = int(time.time()*1000)
-# 
-#     spentTime = int((endTime - beginTime) / 1000)
-#     print("執行花費時間 %s (秒)" %(spentTime))
-#     print("run %s of %s stocks end" %(cnt, tatalCnt))
-#     time.sleep(5)
 
-sid = "2891"
+sid = "2897"
 startDate = dateDict[sid]
 beginTime = int(time.time()*1000)
 fetchAllPrice(sid, startDate)
