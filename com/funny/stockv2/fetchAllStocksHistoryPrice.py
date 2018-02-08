@@ -12,7 +12,6 @@ from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref, sessionmaker
-from com.funny.stock.TWSEFetcher import TWSEFetcher
 from com.funny.stockv2.TWSEFetcher import TWSEFetcherEx
 from test.sortperf import flush
 
