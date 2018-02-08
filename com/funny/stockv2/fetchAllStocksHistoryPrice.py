@@ -5,7 +5,7 @@
 Created on 2018年1月23日
 @author: rocky.wang
 '''
-import requests
+import requests, os
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Float
@@ -64,8 +64,12 @@ class StockInsertRecord(Base):
         
 import csv
 
+# 取得目前 py 檔的資料夾路徑   (os.getwcd() 會取得執行 bat 的目錄，不能用它)
+ph = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(ph, "all.csv")
+
 dateDict = {}
-with open("all.csv") as f1:
+with open(filename) as f1:
     reader = csv.reader(f1)
     for row in reader:
         dt = row[1].replace("/", "")
