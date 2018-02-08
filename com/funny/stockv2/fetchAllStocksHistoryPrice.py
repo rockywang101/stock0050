@@ -13,7 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref, sessionmaker
 import sys
-sys.path.append("..")
+sys.path.append("/data/data/com.termux/files/home/stock0050")
 from com.funny.stockv2.TWSEFetcher import TWSEFetcherEx
 from test.sortperf import flush
 

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "com/funny/stockv2/fetchAllStocksHistoryPrice.py", line 15, in <module>
+    from com.funny.stock.TWSEFetcher import TWSEFetcher
+ModuleNotFoundError: No module named 'com'
+Traceback (most recent call last):
+  File "com/funny/stockv2/fetchAllStocksHistoryPrice.py", line 15, in <module>
+    from com.funny.stock.TWSEFetcher import TWSEFetcher
+ModuleNotFoundError: No module named 'com'
