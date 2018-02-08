@@ -10,12 +10,10 @@ import requests
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship, backref, sessionmaker
+from sqlalchemy.orm import sessionmaker
 import sys
 sys.path.append("/data/data/com.termux/files/home/stock0050")
 from com.funny.stockv2.TWSEFetcher import TWSEFetcherEx
-from test.sortperf import flush
 
 Base = declarative_base()
 engine = create_engine('sqlite:///stock.sqlite', echo=False)
