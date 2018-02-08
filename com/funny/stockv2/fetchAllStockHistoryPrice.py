@@ -98,7 +98,7 @@ def fetchAllStockFinalPrice(dt=datetime.datetime.now().strftime("%Y%m%d")):
 
 
 allStockIds = []
-datas = fetchAllStockFinalPrice()
+datas = fetchAllStockFinalPrice(dt="20180208")
 if datas != None:
     for data in datas:
         allStockIds.append(data[0])
