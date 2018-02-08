@@ -15,8 +15,13 @@ import sys
 sys.path.append("/data/data/com.termux/files/home/stock0050")
 from com.funny.stockv2.TWSEFetcher import TWSEFetcherEx
 
+ph = os.path.dirname(os.path.abspath(__file__))
+sqname = "sqlite:///" + os.path.join(ph, "stock.sqlite")
+print(sqname)
+
 Base = declarative_base()
-engine = create_engine('sqlite:///stock.sqlite', echo=False)
+#engine = create_engine('sqlite:///stock.sqlite', echo=False)
+engine = create_engine(sqname, echo=False)
          
 
 class StockPrice(Base):
@@ -171,8 +176,9 @@ def fetchAllPrice(sid, startDate):
 Session = sessionmaker(bind=engine)
 session = Session()
 
-stockId = "2897"
 rows = session.query(StockInsertRecord).filter_by(result=0).order_by("id")
+
+print("rowsCounts %s" %(rows.count()))
 
 for row in rows:
     fetchMonthPrice(row.stockId, row.dt)
