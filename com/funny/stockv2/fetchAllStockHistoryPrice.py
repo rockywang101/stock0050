@@ -175,18 +175,19 @@ def fetchAllPrice(sid, startDate):
         beginDate += relativedelta(months = 1)   # 月份 +1
     
 
+print("start running...", flush=True)
 
 Session = sessionmaker(bind=engine)
 session = Session()
 
 rows = session.query(StockInsertRecord).filter_by(result=0).order_by("id")
 
-print("rowsCounts %s" %(rows.count()))
+print("rowsCounts %s" %(rows.count()), flush=True)
 
 for row in rows:
     fetchMonthPrice(row.stockId, row.dt)
-    print("\n%s %s completed, sleep 5 to continue...\n" %(row.stockId, row.dt), flush=True)
-    time.sleep(5)
+    print("\n%s %s completed, sleep 15 to continue...\n" %(row.stockId, row.dt), flush=True)
+    time.sleep(15)
     
 
 # 從 testInsert4 改，不以個檔，改以 stock_insert_record 去 for loop
