@@ -3,7 +3,26 @@
 Created on 2017年12月22日
 @author: rocky.wang
 '''
-import requests, collections, time
+import requests, collections, time, os
+
+
+
+"""
+發送 Line Notify 訊息
+"""
+def lineNotify(token, msg):
+    url = "https://notify-api.line.me/api/notify"
+    headers = {
+        "Authorization": "Bearer " + token,
+        "Content-Type" : "application/x-www-form-urlencoded"
+    }
+   
+    payload = {'message': msg}
+    requests.post(url, headers = headers, params = payload)
+
+token = os.environ["LINE_TEST_TOKEN"]
+
+
 
 
 DATATUPLE = collections.namedtuple('Data', 
@@ -48,21 +67,31 @@ class TWSEFetcherEx():
         url = TWSE_BASE_STOCK_URL + "?response=json&date=" + ym + "01&stockNo=" + sid
         print(url)
         r = requests.get(url)
+        stat = None
         try:
             data = r.json()
             print(data)
-            if data['stat'] == '很抱歉，沒有符合條件的資料!':
-                return None
+            
+            stat = data['stat']
+            
+#             if data['stat'] == '很抱歉，沒有符合條件的資料!':
+#                 return None
 
             if data['stat'] == 'OK':
                 return self.purify(data['data'])
+            else:
+                # 目前不應該有查不到資料的問題
+                raise Exception("stat error")
         except Exception as e:
             print(e)
+            
             if retry > 0:
-                time.sleep(5)
+                lineNotify(token, "error occur, retry after one minute")
+                time.sleep(60)
                 print("retry %s times" %(retry))
                 return self.fetch(ym, sid, retry - 1)
             else:
+                lineNotify(token, "error occur !! retry fail")
                 raise e
 
 
