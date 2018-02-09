@@ -21,10 +21,14 @@ class TWSEFetcherEx():
         data[0] = data[0].strip()
         data[1] = int(data[1].replace(',', ''))
         data[2] = int(data[2].replace(',', ''))
-        data[3] = float(data[3].replace(',', ''))
-        data[4] = float(data[4].replace(',', ''))
-        data[5] = float(data[5].replace(',', ''))
-        data[6] = float(data[6].replace(',', ''))
+        
+        # 3~6
+        for i in range(3, 7):
+            if data[i].replace(',', '') == '--':
+                data[i] = None
+            else:
+                data[i] = float(data[i].replace(',', ''))
+                
         data[8] = int(data[8].replace(',', ''))
         return data
 
@@ -35,7 +39,7 @@ class TWSEFetcherEx():
         """Convert '106/05/01' to '2017/05/01'"""
         return '/'.join([str(int(date.split('/')[0]) + 1911)] + date.split('/')[1:])
     
-    def fetch(self, ym: str, sid: str, retry = 3):
+    def fetch(self, ym: str, sid: str, retry = 2):
 
         print('TWSE Fetching Stock [%s], ym: [%s]' %(sid, ym))        
 #         params = {'response': 'json', 'date': ym+'01', 'stockNo': sid}
@@ -58,8 +62,8 @@ class TWSEFetcherEx():
                 time.sleep(5)
                 print("retry %s times" %(retry))
                 return self.fetch(ym, sid, retry - 1)
-
-            print("Cannot get data")
+            else:
+                raise e
 
 
     def fetch2(self, year: int, month: int, sid: str, retry = 3):
