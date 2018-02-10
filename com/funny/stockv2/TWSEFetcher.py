@@ -86,13 +86,18 @@ class TWSEFetcherEx():
             print(e)
             
             if retry > 0:
-                lineNotify(token, "error occur, retry after one minute")
+                if stat != '很抱歉，沒有符合條件的資料!':
+                    lineNotify(token, "error occur, retry after one minute")
+                    
                 time.sleep(60)
                 print("retry %s times" %(retry))
                 return self.fetch(ym, sid, retry - 1)
             else:
-                lineNotify(token, "error occur !! retry fail")
-                raise e
+                if stat != '很抱歉，沒有符合條件的資料!':
+                    lineNotify(token, "error occur !! retry fail")
+                    raise e
+                else:
+                    return None
 
 
     def fetch2(self, year: int, month: int, sid: str, retry = 3):

@@ -17,7 +17,7 @@ from com.funny.stockv2.TWSEFetcher import TWSEFetcherEx
 
 ph = os.path.dirname(os.path.abspath(__file__))
 sqname = "sqlite:///" + os.path.join(ph, "stock.sqlite")
-print(sqname)
+print(sqname, flush=True)
 
 Base = declarative_base()
 #engine = create_engine('sqlite:///stock.sqlite', echo=False)
@@ -87,13 +87,13 @@ import datetime, time
 def fetchAllStockFinalPrice(dt=datetime.datetime.now().strftime("%Y%m%d")):
     # 不包含牛市xxx 的
     url = "http://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=" + dt + "&type=ALLBUT0999&_=" + str(int(time.time() * 1000))
-    print("GET " + url)
+    print("GET " + url, flush=True)
     
     stat = requests.get(url).json().get("stat")
     if stat == "OK":
         return requests.get(url).json()["data5"]    
     else:
-        print("no data found")
+        print("no data found", flush=True)
         return None
 
 
@@ -103,7 +103,7 @@ if datas != None:
     for data in datas:
         allStockIds.append(data[0])
 
-print("sleep 2 seconds to be continue...")
+print("sleep 2 seconds to be continue...", flush=True)
 time.sleep(2)
 print()
 
@@ -142,7 +142,11 @@ def fetchMonthPrice(stockId, dt):
     
     fetcher = TWSEFetcherEx()
     data = fetcher.fetch(dt, stockId)
-     
+    
+    if data == None:
+        print("\n### No Data found for %s %s ###\n" %(stockId, dt), flush=True)
+        return
+
     stockList = []
     for d in data:
         dd = d[0].strip().split("/")
