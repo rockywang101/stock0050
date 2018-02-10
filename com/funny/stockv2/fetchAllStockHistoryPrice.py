@@ -137,6 +137,19 @@ def insertDB(stockList, stockId, dt, test=False):
     rows[0].result = 1
       
     session.commit()
+    
+    
+def updateRecordFail(stockId, dt):
+    Session = sessionmaker(bind=engine)
+    session = Session()
+      
+    rows = session.query(StockInsertRecord).filter_by(stockId=stockId).filter_by(dt=dt)
+    rows[0].result = -1
+    
+    if rows.count() != 1:
+        raise Exception("month record not one")
+      
+    session.commit()
 
 def fetchMonthPrice(stockId, dt):
     
@@ -145,6 +158,7 @@ def fetchMonthPrice(stockId, dt):
     
     if data == None:
         print("\n### No Data found for %s %s ###\n" %(stockId, dt), flush=True)
+        updateRecordFail(stockId, dt)
         return
 
     stockList = []
