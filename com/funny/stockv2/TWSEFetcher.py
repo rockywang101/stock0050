@@ -60,7 +60,7 @@ class TWSEFetcherEx():
     
     def fetch(self, ym: str, sid: str, retry = 2):
 
-        print('TWSE Fetching Stock [%s], ym: [%s]' %(sid, ym))        
+        print('TWSE Fetching Stock [%s], ym: [%s]' %(sid, ym), flush=True)        
 #         params = {'response': 'json', 'date': ym+'01', 'stockNo': sid}
 #         r = requests.get(TWSE_BASE_STOCK_URL, params=params)
         
@@ -83,14 +83,16 @@ class TWSEFetcherEx():
                 # 目前不應該有查不到資料的問題
                 raise Exception("stat error")
         except Exception as e:
-            print(e)
+            print(e, flush=True)
             
             if retry > 0:
-                if stat != '很抱歉，沒有符合條件的資料!':
+                print("retry %s times, stat: %s" %(retry, stat), flush=True)
+                if stat == '很抱歉，沒有符合條件的資料!':
+                    time.sleep(5)
+                else:
                     lineNotify(token, "error occur, retry after one minute")
+                    time.sleep(60)
                     
-                time.sleep(60)
-                print("retry %s times" %(retry))
                 return self.fetch(ym, sid, retry - 1)
             else:
                 if stat != '很抱歉，沒有符合條件的資料!':
