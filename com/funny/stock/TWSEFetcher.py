@@ -39,8 +39,8 @@ class TWSEFetcher():
 
         print('TWSE Fetching Stock [%s], ym: [%s]' %(sid, ym))        
         params = {'date': ym+'01', 'stockNo': sid}
-        r = requests.get(TWSE_BASE_STOCK_URL, params=params)
         try:
+            r = requests.get(TWSE_BASE_STOCK_URL, params=params)
             data = r.json()
             if data['stat'] == '很抱歉，沒有符合條件的資料!':
                 return None

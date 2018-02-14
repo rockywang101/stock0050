@@ -66,9 +66,9 @@ class TWSEFetcherEx():
         
         url = TWSE_BASE_STOCK_URL + "?response=json&date=" + ym + "01&stockNo=" + sid
         print(url, flush=True)
-        r = requests.get(url)
         stat = None
         try:
+            r = requests.get(url)
             data = r.json()
             print(data, flush=True)
             
