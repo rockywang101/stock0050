@@ -1,7 +1,5 @@
 '''
-通知我自己今天的天氣  
-
-留存而已，後來覺得通知有點白痴，什麼都通知就等於沒通知，應該重要或很難查到的東西再通知就好
+拿取氣象的 open data 通知 line notify
 
 Created on 2018年1月31日
 @author: rocky.wang
@@ -12,7 +10,7 @@ import lineTool
 
 apikey = os.environ["OPEN_DATA_CWB_TOKEN"]
 
-dataid = "F-C0032-029"
+dataid = "F-C0032-029" # 雲林縣天氣小幫手
 url = "http://opendata.cwb.gov.tw/opendataapi?dataid=" + dataid + "&authorizationkey=" + apikey
 
 xml = ET.fromstring(requests.get(url).text)
