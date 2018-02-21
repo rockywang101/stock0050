@@ -15,9 +15,12 @@ url = "http://opendata.cwb.gov.tw/opendataapi?dataid=" + dataid + "&authorizatio
 
 xml = ET.fromstring(requests.get(url).text)
 
-msg = xml[8][2][1][0].text + "\n\n" + xml[8][2][2][0].text
-# msg = xml[8][2][1][0].text + "\n\n" + xml[8][2][2][0].text + "\n\n" + xml[8][2][3][0].text
+msg = xml[8][2][1][0].text + "\n\n" + xml[8][2][3][0].text
 
 print(msg)
+
+# msg = xml[8][2][1][0].text + "\n\n" + xml[8][2][2][0].text + "\n\n" + xml[8][2][3][0].text
+# print(msg)
+
 lineTool.lineNotify(os.environ["LINE_STUPID_TOKEN"], msg)
 
