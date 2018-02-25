@@ -87,7 +87,7 @@ class TWSEFetcherEx():
             
             if retry > 0:
                 print("retry %s times, stat: %s" %(retry, stat), flush=True)
-                if stat == '很抱歉，沒有符合條件的資料!':
+                if stat == '很抱歉，沒有符合條件的資料!' or stat == '查詢日期小於81年1月4日，請重新查詢!':
                     time.sleep(5)
                 else:
                     lineNotify(token, "error occur, retry after one minute")
