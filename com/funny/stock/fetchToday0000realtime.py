@@ -21,7 +21,7 @@ def fetchStock(stockId):
 
 
 """
-取得今日盤中即時價格
+取得大盤盤中即時價格
 """
 def fetchTodayPriceRealtime():
     
@@ -166,6 +166,43 @@ if float(k9) <= 20 or float(k9) >= 80:
         msg += " " + diffStr    
 
 
+if msg != None:
+    print(msg)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
+    time.sleep(3)   # delays for n seconds
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
+    time.sleep(3)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+
+# 0056 是否爆大量判斷
+print()
+msg = None
+j = fetchStock("0056")
+    
+v = j.get("msgArray")[0].get("v")
+    
+if int(v) >= 4000:
+    msg = "0056爆量通知，目前交易量 %s" %(v)
+    
+    zStr = j.get("msgArray")[0].get("z")
+    msg += "\n目前價格 %s" %(zStr)
+     
+    z = float(j.get('msgArray')[0].get('z'))
+    y = float(j.get('msgArray')[0].get('y'))    
+    diff = z - y
+    diffStr = "%.2f" %(diff)
+    if diff > 0:
+        diffStr = "▲" + diffStr
+        precentDiff = diff / y * 100
+        preDiffStr = "%.2f" %(precentDiff) + "%"
+        diffStr = diffStr + " (" + preDiffStr + ")"
+        msg += " " + diffStr
+    elif diff < 0:
+        diffStr = "▼" + diffStr
+        precentDiff = diff / y * 100
+        preDiffStr = "%.2f" %(precentDiff) + "%"
+        diffStr = diffStr + " (" + preDiffStr + ")"
+        msg += " " + diffStr    
 
 if msg != None:
     print(msg)
@@ -174,3 +211,6 @@ if msg != None:
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
     time.sleep(3)
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+else:
+    print("0056成交量不夠不通知")
+

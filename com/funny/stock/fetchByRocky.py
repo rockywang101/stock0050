@@ -3,7 +3,7 @@ fetch my need and notify me
 
 """
 import requests
-import os
+import os, time
 from lineTool import lineNotify
 from bs4 import BeautifulSoup
 
@@ -48,10 +48,22 @@ def composeLineText(rtnList, minPrice, maxPrice):
 
 text = "\n\n"
 text += composeLineText(fetchPrice("0056"), 24, 26)
+time.sleep(2)
 text += "\n\n"
 text += composeLineText(fetchPrice("2890"), 9.0, 9.6)
+time.sleep(2)
 text += "\n\n"
 text += composeLineText(fetchPrice("2891"), 19, 24)
+time.sleep(2)
+text += "\n\n"
+text += composeLineText(fetchPrice("2880"), 14.8, 16)
+time.sleep(2)
+text += "\n\n"
+text += composeLineText(fetchPrice("2881"), 35, 60)
+time.sleep(2)
+text += "\n\n"
+text += composeLineText(fetchPrice("2882"), 35, 50)
+time.sleep(2)
 
 print(text)
 
