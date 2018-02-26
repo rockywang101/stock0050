@@ -52,6 +52,16 @@ def queryDB(stockId):
       
 #     for stockPrice in stockList:
 #         session.add(stockPrice)
+
+    print("\n\n-------------\n\n")
+
+    rows = session.query(StockPrice).from_statement('SELECT * FROM STOCK_PRICE WHERE stockId = :stockId').params(stockId='0056')
+    for r in rows:
+        print(r)
+
+
+
+
       
     session.commit()
     

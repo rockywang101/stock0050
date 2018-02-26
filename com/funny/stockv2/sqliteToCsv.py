@@ -13,8 +13,8 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship, backref, sessionmaker
 from sqlalchemy.sql.expression import text
 
-from com.funny.stockv2.StockEntity import StockPrice
-
+from com.funny.stockv2.StockEntity import StockInsertRecord, StockPrice
+import csv
 
 Base = declarative_base()
 
@@ -26,27 +26,24 @@ def queryDB(stockId):
     Session = sessionmaker(bind=engine)
     session = Session()
       
-#     rows = session.query(StockPrice)
-    
-#     stat = text('select * from STOCK_PRICE where stockId = :stockId')
-#     rows = session.query(StockPrice).from_statement(stat).params(stockId=stockId)
-    
-    #rows = session.query(StockInsertRecord).filter(StockInsertRecord.stockId=='2897').filter(StockInsertRecord.dt.like('2017%'))
-    #rows = session.query(StockInsertRecord).filter(StockInsertRecord.stockId=='2897').filter(StockInsertRecord.result== 1).limit(3)
-    
-    #rows = session.query(StockInsertRecord).filter_by(stockId='2897').filter_by(dt='2017')
-    
-    # only order by id 不會有警告，但 id desc 就會
-    #rows = session.query(StockPrice).filter_by(stockId='2897').order_by("id").limit(3)
-    
-    rows = session.query(StockPrice).filter_by(stockId=stockId).order_by(text("id desc")).limit(3)
-    
-    print("----")
-    for row in rows:
-        print(row)
-      
-#     for stockPrice in stockList:
-#         session.add(stockPrice)
+    # 取所有在 db 裡的 stockId
+    rows = session.query(StockInsertRecord.stockId).from_statement('SELECT distinct(stockId) FROM stock_insert_record')
+#     rows = session.query(StockInsertRecord.stockId).from_statement('SELECT distinct(stockId) FROM stock_insert_record WHERE stockId = :stockId').params(stockId='9958')
+    for r in rows:
+        print(r[0])
+
+        rows2 = session.query(StockPrice).filter_by(stockId=r[0]).order_by(text("id"))
+        
+        # a append, w write
+        with open("data/"+r[0]+".csv", "w", newline="\n") as csvfile:
+            writer = csv.writer(csvfile)
+            print("----")
+            for row2 in rows2:
+                ym = int(row2.txDate[0:4]) - 1911
+                ymd = str(ym) + "/" +  row2.txDate[4:6] + "/" + row2.txDate[6:8]
+                newRow = [ymd, row2.txAmount, row2.txMoney, row2.openPrice, row2.highPrice, row2.lowPrice, row2.closePrice, row2.diffPrice, row2.txCount]
+                print(newRow)
+                writer.writerow(newRow)
       
     session.commit()
     
