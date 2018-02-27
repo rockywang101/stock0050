@@ -27,7 +27,8 @@ def crawl_all_stock_final_data(dt, retry=2):
                 raise Exception("取得資料日期不符")
             
             # 寫入 csv 檔
-            rowList = [js.get("fields5")] # header    
+            #rowList = [js.get("fields5")] # header
+            rowList = []    
             for data in js.get("data5"):
                 
                 ymd = str(int(dt.strftime("%Y")) - 1911) + "/" + dt.strftime("%m/%d") # 民國年格式 107/02/27
