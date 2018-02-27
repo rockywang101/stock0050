@@ -1,6 +1,8 @@
 '''
 取得所有個股的盤後資料
 
+改到根目錄下的 crawl_all_final_price，這隻是還可以往前爬，先保留著
+
 Created on 2018年2月22日
 @author: rocky.wang
 '''

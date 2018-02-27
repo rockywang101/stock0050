@@ -18,7 +18,7 @@ import csv
 
 Base = declarative_base()
 
-def queryDB(stockId):
+def queryDB():
     engine = create_engine('sqlite:///stock.sqlite', echo=False)
       
     Base.metadata.create_all(engine)
@@ -37,17 +37,15 @@ def queryDB(stockId):
         # a append, w write
         with open("data/"+r[0]+".csv", "w", newline="\n") as csvfile:
             writer = csv.writer(csvfile)
-            print("----")
             for row2 in rows2:
                 ym = int(row2.txDate[0:4]) - 1911
                 ymd = str(ym) + "/" +  row2.txDate[4:6] + "/" + row2.txDate[6:8]
                 newRow = [ymd, row2.txAmount, row2.txMoney, row2.openPrice, row2.highPrice, row2.lowPrice, row2.closePrice, row2.diffPrice, row2.txCount]
-                print(newRow)
                 writer.writerow(newRow)
       
     session.commit()
     
 if __name__ == '__main__':
-    queryDB("0050")
+    queryDB()
 
 
