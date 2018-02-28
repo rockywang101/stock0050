@@ -10,10 +10,10 @@ Created on 2018年2月26日
 @author: rocky.wang
 '''
 import logging
-import datetime, requests, csv, os, time, bs4, lineTool, json
+import datetime, requests, csv, os, time, bs4, lineTool, json, sys
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)-10s %(levelname)-6s %(message)s',
-                handlers=[logging.StreamHandler(), logging.FileHandler(datetime.datetime.now().strftime("tk%Y-%m-%d.log"), encoding='utf-8')])
+                handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler(datetime.datetime.now().strftime("tk%Y-%m-%d.log"), encoding='utf-8')])
 logger = logging.getLogger(__name__)
 
 def fetchStock(stockId):
