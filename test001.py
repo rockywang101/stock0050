@@ -83,7 +83,7 @@ if __name__ == '__main__':
         
         li = open_file(stockId)
         
-        cond = 15
-        if li[2] > cond or li[4] > cond:
-            print("stockId %s is bigger %s %s" %(stockId, li[2], li[4]))
+        cond = 10
+        if li[2] > cond and li[4] > cond:
+            print("stockId %s is bigger %.2f\t%.2f" %(stockId, li[2], li[4]))
     
