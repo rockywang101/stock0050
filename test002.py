@@ -1,11 +1,12 @@
 '''
-Created on 2018年2月28日
+由 test001 改，判斷 0050 成份股，排序殖利率
 
-@author: Rocky
+Created on 2018年2月28日
+@author: rocky.wang
 '''
 import csv, datetime
 from _collections import deque
-import os
+import os, lineTool
 
 def get_final_price_by_file(stockId):
     filename = "data/{}.csv".format(stockId)
@@ -70,20 +71,19 @@ def open_file(stockId):
 
 if __name__ == '__main__':
     
-    filenames = os.listdir("data")
- 
-    for filename in filenames:
-        if not filename.endswith(".csv"):
-            continue
+    with open("0050composition.csv", "r", encoding="utf-8") as f1:
+        reader = csv.reader(f1)
+        msg = ""
+        for row in reader:
+            stockId = row[0]
         
-#         if not filename == '2883.csv':
-#             continue
+            li = open_file(stockId)
+            
+            cond = 8
+            if li[2] > cond and li[4] > cond:
+                msg += "\n%s %s  平均殖利率  三年  %.2f 五年  %.2f" %(stockId, row[1], li[2], li[4])
+                
         
-        stockId = filename.split(".")[0]
-        
-        li = open_file(stockId)
-        
-        cond = 8
-        if li[2] > cond or li[4] > cond:
-            print("stockId %s is bigger %.2f\t%.2f" %(stockId, li[2], li[4]))
+        print(msg)        
+#         lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
     

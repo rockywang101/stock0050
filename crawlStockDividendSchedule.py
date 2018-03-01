@@ -63,7 +63,7 @@ if __name__ == '__main__':
         
         fetch(stockId)
         print("end. continue next... ")
-        time.sleep(5)
+        time.sleep(10)
     
 
 
