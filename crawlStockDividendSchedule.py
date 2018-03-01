@@ -8,6 +8,7 @@ import os, csv
 import requests
 from bs4 import BeautifulSoup
 import time, logging, sys, datetime
+from pathlib import Path
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)-10s %(levelname)-6s %(message)s',
                     handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler(datetime.datetime.now().strftime("tk%Y-%m-%d.log"), encoding='utf-8')])
@@ -52,8 +53,27 @@ if __name__ == '__main__':
     for filename in filenames:
         if not filename.endswith(".csv"):
             continue
+        
         stockId = filename.split(".")[0]
+        
+        # 避免重抓，但真正要重新更新時，這段要拿掉
+        if Path("dataDividend/{}_dividendSchedule.csv".format(stockId)).is_file():
+            logger.info("%s 已存在" %(stockId))
+            continue
+        
         fetch(stockId)
         print("end. continue next... ")
         time.sleep(5)
     
+
+
+
+
+
+
+
+
+
+
+
+
