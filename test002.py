@@ -4,7 +4,7 @@
 Created on 2018年2月28日
 @author: rocky.wang
 '''
-import csv, datetime
+import csv, datetime, time
 from _collections import deque
 import os, lineTool
 
@@ -86,5 +86,13 @@ if __name__ == '__main__':
                 msg += "\n%s %s    %.2f %.2f  %.2f  %.2f  %.2f  %.2f  %.2f" %(stockId, row[1], li[0], li[1], li[2], li[3], li[4], li[5], li[6])
         
         print(msg)        
-        lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+#         lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+    
+        # 發 LINE 通知
+        lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
+        time.sleep(3)   # delays for n seconds
+        lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
+        time.sleep(3)
+        lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+    
     
