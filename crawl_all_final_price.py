@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     dt = datetime.datetime.now()
     
-    dt = datetime.datetime(2018, 3, 1)
+#     dt = datetime.datetime(2018, 3, 1)
 
     crawl_all_stock_final_data(dt)
     
@@ -77,8 +77,3 @@ if __name__ == "__main__":
         with open(filename, "r") as f1:
             reader = csv.reader(f1)
             
-        
-    
-    
-    
-    
