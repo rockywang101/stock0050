@@ -74,6 +74,7 @@ if __name__ == '__main__':
     with open("0050composition.csv", "r", encoding="utf-8") as f1:
         reader = csv.reader(f1)
         msg = ""
+        msg += "005成份股中高殖利率列表，一至七年平均殖利率\n"
         for row in reader:
             stockId = row[0]
         
@@ -81,9 +82,9 @@ if __name__ == '__main__':
             
             cond = 8
             if li[2] > cond and li[4] > cond:
-                msg += "\n%s %s  平均殖利率  三年  %.2f 五年  %.2f" %(stockId, row[1], li[2], li[4])
-                
+#                 msg += "\n%s %s  平均殖利率  三年  %.2f 五年  %.2f" %(stockId, row[1], li[2], li[4])
+                msg += "\n%s %s    %.2f %.2f  %.2f  %.2f  %.2f  %.2f  %.2f" %(stockId, row[1], li[0], li[1], li[2], li[3], li[4], li[5], li[6])
         
         print(msg)        
-#         lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
+        lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
     

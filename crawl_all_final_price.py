@@ -5,6 +5,7 @@ Created on 2018年2月27日
 @author: rocky.wang
 '''
 import time, datetime, requests, json, os, logging, csv, sys
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)-10s %(levelname)-6s %(message)s',
                 handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler(datetime.datetime.now().strftime("%Y-%m-%d.log"), encoding='utf-8')])
@@ -65,6 +66,19 @@ if __name__ == "__main__":
 
     dt = datetime.datetime.now()
     
-#     dt = datetime.datetime(2018, 2, 26)
+    dt = datetime.datetime(2018, 3, 1)
 
     crawl_all_stock_final_data(dt)
+    
+    # from daily_price to data, if file exist
+    filename = "daily_price/{}.csv".format(dt.strftime("%Y%m%d"))
+    if Path(filename).is_file():
+        
+        with open(filename, "r") as f1:
+            reader = csv.reader(f1)
+            
+        
+    
+    
+    
+    

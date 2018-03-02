@@ -6,7 +6,13 @@ import os, sys, csv, datetime
 
 dt = datetime.datetime.now()
 
-with open("daily_price/{}.csv".format(dt.strftime("%Y%m%d")), "r", encoding="utf-8") as f1:
+#dt = datetime.datetime(2018, 3, 1)
+
+filename = "daily_price/{}.csv".format(dt.strftime("%Y%m%d"))
+
+print(filename)
+
+with open(filename, "r", encoding="utf-8") as f1:
     csvReader = csv.reader(f1)
     for row in csvReader:
         print(row)
