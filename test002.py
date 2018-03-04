@@ -82,8 +82,13 @@ if __name__ == '__main__':
             
             cond = 8
             if li[2] > cond and li[4] > cond:
+                
+                if len(row[1]) == 2:
+                    row[1] = row[1] + "口"
+                
 #                 msg += "\n%s %s  平均殖利率  三年  %.2f 五年  %.2f" %(stockId, row[1], li[2], li[4])
-                msg += "\n%s %s    %.2f %.2f  %.2f  %.2f  %.2f  %.2f  %.2f" %(stockId, row[1], li[0], li[1], li[2], li[3], li[4], li[5], li[6])
+                msg += "\n%s %s\t%6.2f %6.2f %6.2f %6.2f %6.2f %6.2f %6.2f" %(stockId, row[1], li[0], li[1], li[2], li[3], li[4], li[5], li[6])
+#                 msg += "\n%s  00.00" %(row[1])
         
         print(msg)        
 #         lineTool.lineNotify(os.environ["LINE_TEST_TOKEN"], msg)
@@ -94,5 +99,9 @@ if __name__ == '__main__':
         lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
         time.sleep(3)
         lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+        time.sleep(3)
+        lineTool.lineNotify(os.environ["LINE_0050_TOKEN4"], msg)
+        time.sleep(3)
+        lineTool.lineNotify(os.environ["LINE_0050_TOKEN5"], msg)
     
     

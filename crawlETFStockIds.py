@@ -1,6 +1,8 @@
 '''
 抓取 0050 成份股資料
 
+http://www.yuantaetfs.com/#/Orders/1066
+
 Created on 2018年3月2日
 @author: rocky.wang
 '''

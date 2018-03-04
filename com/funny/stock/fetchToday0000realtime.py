@@ -173,6 +173,10 @@ if msg != None:
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
     time.sleep(3)
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+    time.sleep(3)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN4"], msg)
+    time.sleep(3)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN5"], msg)
 
 # 0056 是否爆大量判斷
 print()
@@ -211,6 +215,10 @@ if msg != None:
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
     time.sleep(3)
     lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+    time.sleep(3)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN4"], msg)
+    time.sleep(3)
+    lineTool.lineNotify(os.environ["LINE_0050_TOKEN5"], msg)
 else:
     print("0056成交量不夠不通知")
 

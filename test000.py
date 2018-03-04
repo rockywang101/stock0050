@@ -64,11 +64,12 @@ def calRate(price:float, m:float, s:float):
 
 if __name__ == "__main__":
 
-    sid = "3231"
+    sid = "2002"
 
     j = fetchStock(sid)
     z = j.get("msgArray")[0].get("z") # 現價
-    price = float(z)  
+    price = float(z)
+    print(price)
     fetch(price, sid)
 
         
