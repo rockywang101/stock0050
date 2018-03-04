@@ -103,5 +103,6 @@ if __name__ == '__main__':
         lineTool.lineNotify(os.environ["LINE_0050_TOKEN4"], msg)
         time.sleep(3)
         lineTool.lineNotify(os.environ["LINE_0050_TOKEN5"], msg)
-    
+        time.sleep(3)
+        lineTool.lineNotify(os.environ["LINE_0050_TOKEN6"], msg)
     
