@@ -33,7 +33,7 @@ def fetch(price, sid):
         m = float(tds[10].text)
         s = float(tds[13].text)
         x = calRate(price, m, s)
-        print("%s years  %s + %s, Rate: %s" %(tds[1].text, tds[10].text, tds[13].text, x))
+        print("%s年 配息 %s\t配股 %s\t殖利率: %s" %(tds[1].text, tds[10].text, tds[13].text, x))
         cnt += 1
         if cnt >=10:
             break
@@ -64,12 +64,16 @@ def calRate(price:float, m:float, s:float):
 
 if __name__ == "__main__":
 
-    sid = "2002"
+    sid = "2105"
 
     j = fetchStock(sid)
     z = j.get("msgArray")[0].get("z") # 現價
+    print()
     price = float(z)
-    print(price)
+    price20 = price * 1.2
+    price30 = price * 1.3
+    print("現價 %s\t停利兩成/三成價格 || %.2f || %.2f" %(price, price20, price30))
+    print()
     fetch(price, sid)
 
         
