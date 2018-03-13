@@ -5,8 +5,9 @@ Created on 2018年1月31日
 @author: rocky.wang
 '''
 import xml.etree.ElementTree as ET
-import requests, os
+import requests, os, time
 import lineTool
+
 
 apikey = os.environ["OPEN_DATA_CWB_TOKEN"]
 
@@ -23,4 +24,9 @@ print(msg)
 # print(msg)
 
 lineTool.lineNotify(os.environ["LINE_STUPID_TOKEN"], msg)
+
+
+time.sleep(1)
+mrgMsg = "早安，美好的一天  :D"
+lineTool.lineNotify(os.environ["LINE_STUPID_TOKEN"], mrgMsg)
 
