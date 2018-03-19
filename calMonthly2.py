@@ -41,7 +41,10 @@ def getPriceMap(stockId):
     return priceMap
 
 
-def cal(stockId, salary, dt):
+def cal(stockId, salary, beginYear, endYear):
+    
+    beginDate = datetime.date(beginYear, 1, 1)
+    endDate = datetime.date(endYear, 12, 31)
     
     priceMap = getPriceMap(stockId)
     data = get_dividend_data(stockId)
@@ -49,10 +52,8 @@ def cal(stockId, salary, dt):
     # 現金 / 股數 / 當日股價 / 股票帳面價值 / 帳面總資產 / 投入總成本 / 目前總獲利 / 投報率 / 年化報酬率
     li = [0, 0, 0.0, 0, 0, 0, 0, 0.0, 0.0]
     
-    #for i in range(36):
-    conti = True
     i = 0
-    while conti:
+    while beginDate < endDate:
         i += 1
         year = int((i) // 12) + 1
         print(year)
@@ -114,16 +115,16 @@ def cal(stockId, salary, dt):
         # 往下個月
         dt = dt + relativedelta(months=1)
         print()
-        
-        if (dt.strftime("%Y%m") == "201803"):
-            conti = False
+
+        beginDate += relativedelta(months=1)        
     
 def main():
     stockId = "1730"
-    salary = 10000
-    yearNum = 10
-    
-    cal(stockId, salary, yearNum)
+    beginYear = "2004"
+    endYear = "2014"
+
+    salary = 10000    
+    cal(stockId, salary, beginYear, endYear)
     
 if __name__ == "__main__":
     main()

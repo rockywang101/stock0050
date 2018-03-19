@@ -32,8 +32,8 @@ def fetch(price, sid):
         tds = tr.findAll("td")
         m = float(tds[10].text)
         s = float(tds[13].text)
-        x = calRate(price, m, s)
-        print("%s年 配息 %s\t配股 %s\t殖利率: %s" %(tds[1].text, tds[10].text, tds[13].text, x))
+        x, y = calRate(price, m, s)
+        print("%s年  配息 %.2f\t   配股 %.2f      殖利率: %5s\t%5s" %(tds[1].text, float(tds[10].text), float(tds[13].text), x, y))
         cnt += 1
         if cnt >=10:
             break
@@ -57,14 +57,18 @@ def fetchStock(stockId):
     except json.decoder.JSONDecodeError:
         return {'rtmessage': 'json decode error', 'rtcode': '5000'}
 
+''' 計算殖利率 '''
 def calRate(price:float, m:float, s:float):
     t = m * 1000 + s * 100 * price # 總獲利
     x = t / (price * 1000) * 100 # 總獲利 / 總成本
-    return format(x, ".2f")
+    
+    y = (m + s) / price * 100 # 直接配息 + 配股進行計算
+    
+    return format(x, ".2f"), format(y, ".2f")
 
 if __name__ == "__main__":
 
-    sid = "2105"
+    sid = "2880"
 
     j = fetchStock(sid)
     z = j.get("msgArray")[0].get("z") # 現價

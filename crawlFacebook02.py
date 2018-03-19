@@ -9,7 +9,7 @@ import json
 fanPageId = "arsin168"
 fanPageId = "imDataMan" # 資料視覺化
 fields = "id,posts"
-token = "EAACEdEose0cBADQ4x4shsQMGnUgC1uonbvfiT1JMoBAWcv5ItPFBRZCMN0fae08d1Ho4avA56qiSpDfFHJn3ej7dCGgBp4gmDjHXnvMZCRoaxXC8lFQAzogQywhjUwgSx1ARbSRCq6TYSixai0PQC2uzbpQtfAFcV1UfiaIBwfcB5tjzpv5EColld3np2YiI48Yzm7KgZDZD"
+token = "EAACEdEose0cBAILvHoEj5KHv5ZCytVALZA2jB9ynIlRFA3xroOGRqnYREofPbhCUNvnwWZAwyMaE7R5J2WrSvyZCLHbrh2IZBHW4v1tnlObnTgfoY176nd3ePo5kykMZCaodK9j63u4u6oWZCQWA4ZCM78qkNudNevZB3lHZAVYzGuR2B3LtED5GfK0N437PIXX4h5nAvcbXZB4xwZDZD"
 
 url = 'https://graph.facebook.com/v2.10/{}?fields={}&access_token={}'.format(fanPageId, fields, token)
 
