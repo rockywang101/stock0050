@@ -1,5 +1,6 @@
 '''
-爬粉絲專頁練習
+用 facebook 提供的 SDK 抓取粉絲頁
+
 Created on 2018年3月13日
 @author: rocky.wang
 '''
