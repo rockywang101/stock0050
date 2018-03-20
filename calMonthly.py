@@ -7,9 +7,9 @@ Created on 2018年3月9日
 import datetime, csv
 from dateutil.relativedelta import relativedelta 
 
-stockId = "1730"
-salary = 10000
-dt = datetime.date(2011, 1, 10)
+stockId = "5871"
+salary = 20000
+dt = datetime.date(2008, 1, 10)
 
 ''' 拿歷年配股配息資料 '''
 def open_file(stockId):
@@ -44,7 +44,7 @@ with open("data/{}.csv".format(stockId)) as f1:
 
 
 
-# 現金 / 股數 / 當日股價 / 股票帳面價值 / 帳面總資產 / 投入總成本 / 目前總獲利 / 投報率 / 年化報酬率
+# 現金/股數/當日股價/股票帳面價值/帳面總資產/投入總成本/目前總獲利/投報率/年化報酬率
 li = [0, 0, 0.0, 0, 0, 0, 0, 0.0, 0.0]
 
 #for i in range(36):
@@ -53,10 +53,10 @@ i = 0
 while conti:
     i += 1
     year = int((i) // 12) + 1
-    print(year)
+    print("投資年數 %s " %(year))
     
     dtKey = str(int(dt.strftime('%Y')) - 1911) + dt.strftime('/%m/%d')
-    print(dt.strftime('%Y/%m/%d'))
+    print("%s 投入現金 %s 準備進行投資" %(dt.strftime('%Y/%m/%d'), salary))
     # step 1 領薪水 n 元
     li[0] += salary
     
@@ -74,7 +74,10 @@ while conti:
     li[6] = li[4] - li[5] # 目前總獲利
     li[7] = li[6] / li[5] # 投報率
     li[8] = (li[4] / li[5]) ** (1/year) - 1 # 年化報酬率
+    li[7] = str(round(li[7] * 100, 2)) + "%"
+    li[8] = str(round(li[8] * 100, 2)) + "%"
     
+    print("現金/股數/當日股價/股票帳面價值/帳面總資產/投入總成本/目前總獲利/投報率/年化報酬率")
     print(li)
     ''' step 2 買股'''
     
@@ -87,7 +90,10 @@ while conti:
     li[4] = li[0] + li[3] # 帳面上總資產
     li[6] = li[4] - li[5] # 目前總獲利
     li[7] = li[6] / li[5] # 投報率
-    li[8] = (li[4] / li[5]) ** (1/5) - 1 # 年化報酬率
+    li[8] = (li[4] / li[5]) ** (1/year) - 1 # 年化報酬率
+    li[7] = str(round(li[7] * 100, 2)) + "%"
+    li[8] = str(round(li[8] * 100, 2)) + "%"
+    
     print(li)
     
     ''' step 3 七月時進行配股配息 '''
@@ -106,7 +112,10 @@ while conti:
         li[4] = li[0] + li[3] # 帳面上總資產
         li[6] = li[4] - li[5] # 目前總獲利
         li[7] = li[6] / li[5] # 投報率
-        li[8] = (li[4] / li[5]) ** (1/5) - 1 # 年化報酬率
+        li[8] = (li[4] / li[5]) ** (1/year) - 1 # 年化報酬率
+        li[7] = str(round(li[7] * 100, 2)) + "%"
+        li[8] = str(round(li[8] * 100, 2)) + "%"
+    
         print(li)
     
     # 往下個月
