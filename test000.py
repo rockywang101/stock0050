@@ -68,16 +68,23 @@ def calRate(price:float, m:float, s:float):
 
 if __name__ == "__main__":
 
-    sid = "2880"
+    sid = "2038"
 
     j = fetchStock(sid)
-    z = j.get("msgArray")[0].get("z") # 現價
+    z = j["msgArray"][0]["z"] # 現價
     print()
     price = float(z)
     price20 = price * 1.2
     price30 = price * 1.3
-    print("現價 %s\t停利兩成/三成價格 || %.2f || %.2f" %(price, price20, price30))
+    print("%s %s 現價 %s    停利兩成/三成價格 || %.2f || %.2f" %(j["msgArray"][0]["n"], j["msgArray"][0]["c"], price, price20, price30))
     print()
     fetch(price, sid)
+    
+#     xx = calRate(8, 0, 0.4)
+#     print()
+#     print()
+#     print(xx)
+    
+    
 
         
