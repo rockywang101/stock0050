@@ -180,16 +180,18 @@ print(msg)
 
 
 # 發 LINE 通知
-lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
-time.sleep(3)   # delays for n seconds
-lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
-time.sleep(3)
-lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
-time.sleep(3)
-lineTool.lineNotify(os.environ["LINE_0050_TOKEN4"], msg)
-time.sleep(3)
-lineTool.lineNotify(os.environ["LINE_0050_TOKEN5"], msg)
-time.sleep(3)
-lineTool.lineNotify(os.environ["LINE_0050_TOKEN6"], msg)
+# lineTool.lineNotify(os.environ["LINE_0050_TOKEN"], msg)
+# time.sleep(3)   # delays for n seconds
+# lineTool.lineNotify(os.environ["LINE_0050_TOKEN2"], msg)
+# time.sleep(3)
+# lineTool.lineNotify(os.environ["LINE_0050_TOKEN3"], msg)
+# time.sleep(3)
+# lineTool.lineNotify(os.environ["LINE_0050_TOKEN4"], msg)
+# time.sleep(3)
+# lineTool.lineNotify(os.environ["LINE_0050_TOKEN5"], msg)
+# time.sleep(3)
+# lineTool.lineNotify(os.environ["LINE_0050_TOKEN6"], msg)
+
+time.sleep(15)
 
 print("run completed.")
