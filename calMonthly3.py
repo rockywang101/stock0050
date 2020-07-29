@@ -8,9 +8,9 @@ import datetime, csv
 from dateutil.relativedelta import relativedelta 
 from PriceBean import PriceBean
 
-stockId = "1730"
+stockId = "2884"
 salary = 10000
-dt = datetime.date(2008, 1, 1)
+dt = datetime.date(2010, 1, 1)
 
 bean = PriceBean(stockId, "未知")
 

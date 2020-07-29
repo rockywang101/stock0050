@@ -9,7 +9,7 @@ Created on 2018年3月9日
 '''
 import datetime, csv
 from dateutil.relativedelta import relativedelta 
-
+dt = datetime.datetime.now()
 
 ''' 拿歷年配股配息資料 '''
 def get_dividend_data(stockId):

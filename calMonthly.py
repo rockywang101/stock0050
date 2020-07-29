@@ -7,7 +7,7 @@ Created on 2018年3月9日
 import datetime, csv
 from dateutil.relativedelta import relativedelta 
 
-stockId = "5871"
+stockId = "1264"
 salary = 20000
 dt = datetime.date(2008, 1, 10)
 

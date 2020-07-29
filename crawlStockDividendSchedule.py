@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 import time, logging, sys, datetime
 from pathlib import Path
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)-10s %(levelname)-6s %(message)s',
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(name)-10s %(levelname)-6s %(message)s',
                     handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler(datetime.datetime.now().strftime("tk%Y-%m-%d.log"), encoding='utf-8')])
 logger = logging.getLogger(__name__)
 
@@ -31,12 +31,12 @@ def fetch(stockId):
     elem = soup.find("p", {"style": "line-height:240px;font-size:14pt;color:red;font-weight:bold"})
     if not elem == None and elem.text == '查無除權息日程訊息':
         logger.info("查無除權息日程訊息")
-        with open("dataDividend/{}_dividendSchedule.csv".format(stockId), "w", newline="\n") as f1:
+        with open("dataDividend/{}_dividendSchedule.csv".format(stockId), "w", encoding="utf-8", newline="\n") as f1:
             csvWriter = csv.writer(f1)
         return
 
-    elem = soup.find("table", {"class": "solid_1_padding_3_3_tbl"}).findAll("tr", {"height": "23px"})
-    with open("dataDividend/{}_dividendSchedule.csv".format(stockId), "w", newline="\n") as f1:
+    elem = soup.find("table", {"class": "solid_1_padding_4_1_tbl"}).findAll("tr", {"height": "23px"})
+    with open("dataDividend/{}_dividendSchedule.csv".format(stockId), "w", encoding="utf-8", newline="\n") as f1:
         csvWriter = csv.writer(f1)
         for tr in elem:
             tds = tr.findAll("td")
@@ -47,7 +47,9 @@ def fetch(stockId):
             
 
 if __name__ == '__main__':
-        
+    
+    fetch('1264')    
+    
     filenames = os.listdir("data")
  
     for filename in filenames:
